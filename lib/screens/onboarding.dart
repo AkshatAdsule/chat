@@ -30,12 +30,14 @@ class _OnboardingState extends State<Onboarding> {
             ),
             SizedBox(
               width: 250,
-              child: FloatingActionButton.extended(
+              child: FilledButton(
                 onPressed: () => {},
-                icon: Icon(Icons.add),
-                label: Text(
-                  "Login",
-                  style: TextStyle(fontSize: 20),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "Login",
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
               ),
             ),
@@ -50,12 +52,14 @@ class _OnboardingState extends State<Onboarding> {
             ),
             SizedBox(
               width: 250,
-              child: FloatingActionButton.extended(
+              child: FilledButton(
                 onPressed: () => {},
-                icon: Icon(Icons.add),
-                label: Text(
-                  "Sign Up",
-                  style: TextStyle(fontSize: 20),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
               ),
             ),

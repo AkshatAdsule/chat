@@ -105,12 +105,14 @@ class _SignUpState extends State<SignUp> {
               SizedBox(height: 20),
               SizedBox(
                 width: 250,
-                child: FloatingActionButton.extended(
+                child: FilledButton(
                   onPressed: () => {},
-                  icon: Icon(Icons.add),
-                  label: Text(
-                    "Sign Up",
-                    style: TextStyle(fontSize: 20),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
                 ),
               ),
