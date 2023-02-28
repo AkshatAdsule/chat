@@ -1,3 +1,4 @@
+import 'package:chat/screens/chat_home.dart';
 import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
@@ -20,15 +21,7 @@ class MainApp extends StatelessWidget {
           colorScheme: dark,
           useMaterial3: true,
         ),
-        home: Scaffold(
-            appBar: AppBar(
-              title: const Text("Chat"),
-            ),
-            body: Column(
-              children: [
-                Text("Hello, World!"),
-              ],
-            )),
+        home: const ChatHomeScreen(),
       ),
     );
   }
