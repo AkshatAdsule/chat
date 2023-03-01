@@ -9,8 +9,11 @@ environment:
 dependencies:
   dynamic_color: ^1.6.2
   firebase_core: ^2.4.1
+  firebase_auth: ^4.2.9
   flutter:
     sdk: flutter
+  image_picker: ^0.8.6+3
+  image_cropper: ^3.0.1
 
 dev_dependencies:
   flutter_test:
