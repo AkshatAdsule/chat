@@ -1,7 +1,7 @@
 import 'package:chat/screens/chat_view.dart';
+import 'package:chat/screens/create_chat.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class ChatHomeScreen extends StatefulWidget {
   const ChatHomeScreen({super.key});
@@ -15,14 +15,22 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Firebase.initializeApp();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Chat"),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => {},
+        onPressed: () => {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CreateChatScreen(),
+              ))
+        },
         label: const Text("New Chat"),
         icon: const Icon(Icons.chat_bubble_outline),
+        // ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
@@ -102,7 +110,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 2,
                       ),
                       const Text(
