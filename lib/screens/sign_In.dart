@@ -1,3 +1,4 @@
+import 'package:chat/screens/forgot_password.dart';
 import 'package:chat/screens/onboarding.dart';
 import 'package:chat/screens/sign_up.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class _SignInState extends State<SignIn> {
             children: [
               TextField(
                 controller: _password_controller,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Email",
                   labelStyle: TextStyle(
                     fontSize: 22,
@@ -42,17 +43,17 @@ class _SignInState extends State<SignIn> {
                 ),
                 keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               TextField(
                 controller: _username_controller,
                 decoration: InputDecoration(
                   labelText: "Password",
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 22,
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueAccent),
                   ),
                   suffixIcon: IconButton(
@@ -74,17 +75,17 @@ class _SignInState extends State<SignIn> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Onboarding(),
+                            builder: (context) => ForgetPassword(),
                           ),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Forgot Password?",
                         textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Expanded(
@@ -96,7 +97,7 @@ class _SignInState extends State<SignIn> {
                               builder: (context) => SignUp(),
                             ));
                       },
-                      child: Text(
+                      child: const Text(
                         "Sign Up",
                         textAlign: TextAlign.center,
                       ),
@@ -112,8 +113,8 @@ class _SignInState extends State<SignIn> {
                         content: Text(
                             " Username:${_username_controller.value.text} Password:${_password_controller.value.text}")))
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                       "Sign in",
                       style: TextStyle(fontSize: 18),
@@ -122,16 +123,16 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               SizedBox(
                 width: 260,
                 child: FilledButton(
                   onPressed: () => {},
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                       "Sign in with Google",
                       style: TextStyle(fontSize: 18),
@@ -140,13 +141,13 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               SizedBox(
                 width: 260,
                 child: FilledButton(
                   onPressed: () => {},
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                       "Sign in with Facebook",
                       style: TextStyle(fontSize: 18),

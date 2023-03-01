@@ -1,3 +1,4 @@
+import 'package:chat/screens/user_agreement.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -18,14 +19,14 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Sign up")),
+      appBar: AppBar(title: const Text("Sign up")),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
           child: Column(
             children: [
-              SizedBox(height: 40),
-              TextField(
+              const SizedBox(height: 40),
+              const TextField(
                 decoration: InputDecoration(
                   labelText: "Email",
                   labelStyle: TextStyle(
@@ -37,14 +38,14 @@ class _SignUpState extends State<SignUp> {
                 ),
                 keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 decoration: InputDecoration(
                   labelText: "Password",
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 22,
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueAccent),
                   ),
                   suffixIcon: IconButton(
@@ -58,15 +59,15 @@ class _SignUpState extends State<SignUp> {
                 ),
                 obscureText: _secure,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 decoration: InputDecoration(
                   hintText: "Enter the password again",
                   labelText: "Confirm Password",
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 22,
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueAccent),
                   ),
                   suffixIcon: IconButton(
@@ -82,12 +83,18 @@ class _SignUpState extends State<SignUp> {
                 ),
                 obscureText: _confirm_secure,
               ),
-              SizedBox(height: 20),
-              Text(
-                "Please read the user agreement before proceed ",
-                style: TextStyle(fontSize: 16, color: Colors.blueAccent),
+              const SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserAgreement()));
+                },
+                child: const Text(
+                  "Please read the user agreement before proceed ",
+                  style: TextStyle(fontSize: 16, color: Colors.blueAccent),
+                ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Checkbox(
@@ -98,17 +105,17 @@ class _SignUpState extends State<SignUp> {
                       });
                     },
                   ),
-                  Text("I have read the user agreement",
+                  const Text("I have read the user agreement",
                       style: TextStyle(fontSize: 16))
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               SizedBox(
                 width: 250,
                 child: FilledButton(
                   onPressed: () => {},
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                       "Sign Up",
                       style: TextStyle(fontSize: 20),
