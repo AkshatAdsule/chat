@@ -1,4 +1,7 @@
 import 'package:chat/screens/chat_home.dart';
+import 'package:chat/screens/onboarding.dart';
+import 'package:chat/screens/sign_In.dart';
+import 'package:chat/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
@@ -21,7 +24,7 @@ class MainApp extends StatelessWidget {
           colorScheme: dark,
           useMaterial3: true,
         ),
-        home: const ChatHomeScreen(),
+        home: const SignIn(),
       ),
     );
   }
