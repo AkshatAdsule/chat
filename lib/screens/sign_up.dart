@@ -1,5 +1,9 @@
+import 'package:chat/screens/chat_home.dart';
 import 'package:chat/screens/user_agreement.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
@@ -16,9 +20,14 @@ class _SignUpState extends State<SignUp> {
   bool _confirm_secure = true;
   bool _isChecked = false;
 
+  TextEditingController _email_controller = TextEditingController();
+  TextEditingController _password_controller = TextEditingController();
+  TextEditingController _confirm_password_controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text("Sign up")),
       body: Center(
         child: Padding(
@@ -26,8 +35,9 @@ class _SignUpState extends State<SignUp> {
           child: Column(
             children: [
               const SizedBox(height: 40),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: _email_controller,
+                decoration: const InputDecoration(
                   labelText: "Email",
                   labelStyle: TextStyle(
                     fontSize: 22,
@@ -40,6 +50,7 @@ class _SignUpState extends State<SignUp> {
               ),
               const SizedBox(height: 20),
               TextField(
+                controller: _password_controller,
                 decoration: InputDecoration(
                   labelText: "Password",
                   labelStyle: const TextStyle(
@@ -61,6 +72,7 @@ class _SignUpState extends State<SignUp> {
               ),
               const SizedBox(height: 20),
               TextField(
+                controller: _confirm_password_controller,
                 decoration: InputDecoration(
                   hintText: "Enter the password again",
                   labelText: "Confirm Password",
@@ -113,7 +125,44 @@ class _SignUpState extends State<SignUp> {
               SizedBox(
                 width: 250,
                 child: FilledButton(
-                  onPressed: () => {},
+                  onPressed: () async {
+                    if (_password_controller.text !=
+                        _confirm_password_controller.text) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Passwords do not match!"),
+                      ));
+                      return;
+                    }
+                    if (!_isChecked) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("You must agree to the user agreement!"),
+                      ));
+                      return;
+                    }
+
+                    try {
+                      await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                        email: _email_controller.text,
+                        password: _password_controller.text,
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            e.toString(),
+                          ),
+                        ),
+                      );
+                      return;
+                    }
+
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatHomeScreen(),
+                        ));
+                  },
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
