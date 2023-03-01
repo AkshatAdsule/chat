@@ -1,3 +1,4 @@
+import 'package:chat/screens/sign_In.dart';
 import 'package:chat/screens/user_agreement.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -113,7 +114,10 @@ class _SignUpState extends State<SignUp> {
               SizedBox(
                 width: 250,
                 child: FilledButton(
-                  onPressed: () => {},
+                  onPressed: () => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignIn()))
+                  },
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(

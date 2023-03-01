@@ -1,3 +1,4 @@
+import 'package:chat/screens/chat_home.dart';
 import 'package:chat/screens/forgot_password.dart';
 import 'package:chat/screens/onboarding.dart';
 import 'package:chat/screens/sign_up.dart';
@@ -109,9 +110,13 @@ class _SignInState extends State<SignIn> {
                 width: 260,
                 child: FilledButton(
                   onPressed: () => {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                            " Username:${_username_controller.value.text} Password:${_password_controller.value.text}")))
+                    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //     content: Text(
+                    //         " Username:${_username_controller.value.text} Password:${_password_controller.value.text}")))
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChatHomeScreen()))
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),

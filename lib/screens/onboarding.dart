@@ -1,3 +1,5 @@
+import 'package:chat/screens/sign_In.dart';
+import 'package:chat/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -31,7 +33,10 @@ class _OnboardingState extends State<Onboarding> {
             SizedBox(
               width: 250,
               child: FilledButton(
-                onPressed: () => {},
+                onPressed: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignIn()))
+                },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
@@ -53,7 +58,10 @@ class _OnboardingState extends State<Onboarding> {
             SizedBox(
               width: 250,
               child: FilledButton(
-                onPressed: () => {},
+                onPressed: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignUp()))
+                },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(

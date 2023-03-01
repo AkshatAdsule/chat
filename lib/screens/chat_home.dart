@@ -102,7 +102,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 2,
                       ),
                       const Text(
