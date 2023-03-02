@@ -1,5 +1,6 @@
 import 'package:chat/firebase_options.dart';
 import 'package:chat/screens/chat/chat_home.dart';
+import 'package:chat/screens/sign_in.dart';
 import 'package:chat/services/user_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _MainAppState extends State<MainApp> {
           colorScheme: dark,
           useMaterial3: true,
         ),
-        home: const ChatHomeScreen(),
+        home: const SignIn(),
       ),
     );
   }

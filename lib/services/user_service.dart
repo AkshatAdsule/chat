@@ -27,10 +27,12 @@ class UserService {
     _userDB = FirebaseFirestore.instance.collection("/users");
     _currentFirebaseUser = auth.FirebaseAuth.instance.currentUser;
     auth.FirebaseAuth.instance.authStateChanges().listen(_authListener);
-    User.fromReference(_currentFirebaseUser!.uid).then((value) {
-      _currentUser = value;
-      _userStreamController.add(_currentUser);
-    });
+    if (_currentFirebaseUser != null) {
+      User.fromReference(_currentFirebaseUser!.uid).then((value) {
+        _currentUser = value;
+        _userStreamController.add(_currentUser);
+      });
+    }
   }
 
   void _authListener(auth.User? user) async {
