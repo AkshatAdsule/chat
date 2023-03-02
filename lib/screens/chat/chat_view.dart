@@ -1,6 +1,7 @@
 import 'package:chat/models/chat.dart';
 import 'package:chat/models/message.dart';
 import 'package:chat/models/user.dart';
+import 'package:chat/screens/chat/chat_settings.dart';
 import 'package:chat/services/user_service.dart';
 import 'package:chat/widgets/chat/image_message.dart';
 import 'package:chat/widgets/chat/text_message.dart';
@@ -113,7 +114,14 @@ class _ChatViewPageState extends State<ChatViewPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatSettings(),
+                ),
+              );
+            },
             icon: const Icon(Icons.settings),
           )
         ],

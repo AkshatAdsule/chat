@@ -37,6 +37,7 @@ class _MainAppState extends State<MainApp> {
         ColorScheme? dark,
       ) =>
           MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: Platform.isIOS
               ? ColorScheme.fromSeed(

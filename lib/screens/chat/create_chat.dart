@@ -70,13 +70,16 @@ class _CreateChatScreenState extends State<CreateChatScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              FilledButton(
-                onPressed: () {},
-                child: Row(
-                  children: const [
-                    Text("Add Members"),
-                    Icon(Icons.arrow_forward)
-                  ],
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: FilledButton(
+                  onPressed: () {},
+                  child: Row(
+                    children: const [
+                      Text("Add Members"),
+                      Icon(Icons.arrow_forward)
+                    ],
+                  ),
                 ),
               ),
             ],
