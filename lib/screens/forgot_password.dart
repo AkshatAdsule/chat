@@ -102,7 +102,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   onPressed: () => {
                     FirebaseAuth.instance.sendPasswordResetEmail(
                         email: FirebaseAuth.instance.currentUser!.email!),
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => SignIn()),
                     ),

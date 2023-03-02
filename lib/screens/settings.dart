@@ -5,6 +5,9 @@ import 'package:chat/screens/chat/chat_view.dart';
 import 'package:chat/screens/notification_setting.dart';
 import 'package:chat/screens/privacy_settings.dart';
 import 'package:chat/screens/profile_settings.dart';
+import 'package:chat/screens/sign_in.dart';
+import 'package:chat/services/user_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -32,7 +35,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 CircleAvatar(
                   radius: 40,
                   backgroundImage: NetworkImage(
-                    "https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2,f_auto,g_center,q_auto:good/v1/gcs/platform-data-dsc/contentbuilder/GDG-Bevy-ChapterThumbnail.png",
+                    UserService.getInstance().getCurrentUser()!.profilePhoto!,
                   ),
                 ),
                 Column(
@@ -95,6 +98,17 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
                 Divider(),
+                ListTile(
+                  title: Text("Sign Out"),
+                  onTap: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignIn(),
+                        ));
+                  },
+                ),
               ],
             ),
           ],
