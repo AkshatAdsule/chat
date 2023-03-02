@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatViewPage extends StatefulWidget {
   final int id;
@@ -69,13 +70,37 @@ class _ChatViewPageState extends State<ChatViewPage> {
   }
 
   void _sendImageMessage() async {
+    User currentUser = UserService.getInstance().getCurrentUser()!;
+
+    String uuid = const Uuid().v4();
     XFile? image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       imageQuality: 50,
       maxWidth: 1080,
+      requestFullMetadata: true,
     );
+    Reference uploadRef = FirebaseStorage.instance.ref("/chat_media/$uuid");
     if (image != null) {
-      FirebaseStorage.instance.ref("/chat_media/");
+      await uploadRef.putData(
+        await image.readAsBytes(),
+        SettableMetadata(contentEncoding: image.mimeType),
+      );
+      String url = await uploadRef.getDownloadURL();
+      _chat.messages.add(
+        Message(
+          messageType: MessageType.image,
+          contents: url,
+          sender: currentUser,
+          timestamp: Timestamp.now(),
+        ),
+      );
+      List<Map<String, dynamic>> messagesJson =
+          _chat.messages.map((e) => e.toJson()).toList();
+      FirebaseFirestore.instance
+          .doc("/chats/${widget.chatId}")
+          .update({"messages": messagesJson});
+      _messageController.clear();
+      _scrollController.jumpTo(_scrollController.position.minScrollExtent);
     }
   }
 
@@ -120,7 +145,7 @@ class _ChatViewPageState extends State<ChatViewPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 8),
           child: Column(
             children: [
               Expanded(
@@ -165,7 +190,9 @@ class _ChatViewPageState extends State<ChatViewPage> {
                             (states) =>
                                 Theme.of(context).colorScheme.onBackground,
                           )),
-                      onPressed: () {},
+                      onPressed: () {
+                        _sendImageMessage();
+                      },
                       icon: const Icon(
                         Icons.add_photo_alternate,
                       ),
