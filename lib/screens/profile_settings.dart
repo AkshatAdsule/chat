@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:chat/screens/chat/chat_home.dart';
 import 'package:chat/screens/chat/chat_view.dart';
+import 'package:chat/services/user_service.dart';
 import 'package:chat/widgets/common/circle_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -33,6 +34,9 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
             CircleImagePicker(
               onSelect: (Uint8List image) {},
               radius: 70,
+              initialImage: NetworkImage(
+                UserService.getInstance().getCurrentUser()!.profilePhoto!,
+              ),
             ),
             // Expanded(
             //   flex: 1,

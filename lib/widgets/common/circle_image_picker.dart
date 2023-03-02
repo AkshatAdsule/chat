@@ -7,8 +7,13 @@ import 'package:image_picker/image_picker.dart';
 class CircleImagePicker extends StatefulWidget {
   final Function onSelect;
   final double radius;
-  const CircleImagePicker(
-      {super.key, required this.onSelect, this.radius = 30});
+  final ImageProvider? initialImage;
+  const CircleImagePicker({
+    super.key,
+    required this.onSelect,
+    this.radius = 30,
+    this.initialImage,
+  });
 
   @override
   State<CircleImagePicker> createState() => _CircleImagePickerState();
@@ -22,54 +27,55 @@ class _CircleImagePickerState extends State<CircleImagePicker> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        XFile? image = await _picker.pickImage(
-          source: ImageSource.gallery,
-          imageQuality: 45,
-          maxHeight: 500,
-          maxWidth: 500,
-        );
-        if (image != null) {
-          CroppedFile? croppedFile = await _cropper.cropImage(
-            sourcePath: image.path,
-            aspectRatio: const CropAspectRatio(
-              ratioX: 1,
-              ratioY: 1,
-            ),
-            maxWidth: 500,
+        onTap: () async {
+          XFile? image = await _picker.pickImage(
+            source: ImageSource.gallery,
+            imageQuality: 45,
             maxHeight: 500,
-            compressFormat: ImageCompressFormat.jpg,
-            compressQuality: 45,
-            cropStyle: CropStyle.circle,
+            maxWidth: 500,
           );
-          if (croppedFile != null) {
-            croppedFile.readAsBytes().then((value) {
-              setState(() {
-                imageBytes = value;
-                widget.onSelect(imageBytes);
-              });
-            });
-          }
-        }
-      },
-      child: imageBytes.isEmpty
-          ? CircleAvatar(
-              radius: widget.radius,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.add_photo_alternate),
-                  Text(
-                    "Select Photo",
-                    style: TextStyle(fontSize: widget.radius * 0.25),
-                  ),
-                ],
+          if (image != null) {
+            CroppedFile? croppedFile = await _cropper.cropImage(
+              sourcePath: image.path,
+              aspectRatio: const CropAspectRatio(
+                ratioX: 1,
+                ratioY: 1,
               ),
-            )
-          : CircleAvatar(
-              radius: widget.radius,
-              backgroundImage: MemoryImage(imageBytes),
-            ),
-    );
+              maxWidth: 500,
+              maxHeight: 500,
+              compressFormat: ImageCompressFormat.jpg,
+              compressQuality: 45,
+              cropStyle: CropStyle.circle,
+            );
+            if (croppedFile != null) {
+              croppedFile.readAsBytes().then((value) {
+                setState(() {
+                  imageBytes = value;
+                  widget.onSelect(imageBytes);
+                });
+              });
+            }
+          }
+        },
+        child: !imageBytes.isEmpty || widget.initialImage != null
+            ? CircleAvatar(
+                radius: widget.radius,
+                backgroundImage: imageBytes.isEmpty
+                    ? widget.initialImage
+                    : MemoryImage(imageBytes),
+              )
+            : CircleAvatar(
+                radius: widget.radius,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.add_photo_alternate),
+                    Text(
+                      "Select Photo",
+                      style: TextStyle(fontSize: widget.radius * 0.25),
+                    ),
+                  ],
+                ),
+              ));
   }
 }
