@@ -36,101 +36,103 @@ class _OnboardingState extends State<Onboarding> {
           "Bantr",
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const SizedBox(
-                  height: 80,
-                ),
-                DefaultTextStyle(
-                  style: const TextStyle(
-                    fontSize: 50,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const SizedBox(
+                    height: 80,
                   ),
-                  child: AnimatedTextKit(
-                    repeatForever: true,
-                    animatedTexts: [
-                      FadeAnimatedText("Hello!"),
-                      FadeAnimatedText("Hola!"),
-                      FadeAnimatedText("Hallo!"),
-                      FadeAnimatedText("안녕하세요!"),
-                      FadeAnimatedText("你好!")
-                    ],
+                  DefaultTextStyle(
+                    style: const TextStyle(
+                      fontSize: 50,
+                    ),
+                    child: AnimatedTextKit(
+                      repeatForever: true,
+                      animatedTexts: [
+                        FadeAnimatedText("Hello!"),
+                        FadeAnimatedText("Hola!"),
+                        FadeAnimatedText("Hallo!"),
+                        FadeAnimatedText("안녕하세요!"),
+                        FadeAnimatedText("你好!")
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            const Text(
-              "Get started to find and talk to new people...",
-              style: TextStyle(fontSize: 16),
-            ),
-            Expanded(
-              child: Container(),
-            ),
-            Column(
-              children: [
-                FilledButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SignUp(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Text(
-                          "Sign Up",
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              const Text(
+                "Get started to find and talk to new people...",
+                style: TextStyle(fontSize: 16),
+              ),
+              Expanded(
+                child: Container(),
+              ),
+              Column(
+                children: [
+                  FilledButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignUp(),
                         ),
-                      ),
-                      Expanded(
-                        child: Container(),
-                      ),
-                    ],
-                  ),
-                ),
-                const Divider(),
-                FilledButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SignIn(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Text(
-                          "Login",
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(),
                         ),
-                      ),
-                      Expanded(
-                        child: Container(),
-                      ),
-                    ],
+                        const Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Text(
+                            "Sign Up",
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  const Divider(),
+                  FilledButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignIn(),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Text(
+                            "Login",
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
