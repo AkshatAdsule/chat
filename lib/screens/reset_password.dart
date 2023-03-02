@@ -6,14 +6,14 @@ import 'package:flutter/src/widgets/placeholder.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key});
+class archive extends StatefulWidget {
+  const archive({super.key});
 
   @override
-  State<ResetPassword> createState() => _ResetPasswordState();
+  State<archive> createState() => _archiveState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _archiveState extends State<archive> {
   bool _secure_pswd = true;
   bool _secure_confirm = true;
   TextEditingController _password_controller = TextEditingController();

@@ -94,7 +94,7 @@ class _SignInState extends State<SignIn> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ForgetPassword(),
+                          builder: (context) => ResetPassword(),
                         ),
                       );
                     },

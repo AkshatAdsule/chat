@@ -3,15 +3,16 @@ import 'package:chat/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class ForgetPassword extends StatefulWidget {
-  const ForgetPassword({super.key});
+class ResetPassword extends StatefulWidget {
+  const ResetPassword({super.key});
 
   @override
-  State<ForgetPassword> createState() => _ForgetPasswordState();
+  State<ResetPassword> createState() => _ResetPasswordState();
 }
 
-class _ForgetPasswordState extends State<ForgetPassword> {
+class _ResetPasswordState extends State<ResetPassword> {
   TextEditingController _email_controller = TextEditingController();
   TextEditingController _verification_controller = TextEditingController();
   bool _secure = true;
@@ -30,6 +31,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ),
               TextField(
                 controller: _email_controller,
+                onTap: () {
+                  _email_controller.text =
+                      FirebaseAuth.instance.currentUser!.email.toString();
+                },
                 decoration: const InputDecoration(
                   labelText: "Email",
                   hintText: "Enter your email",
@@ -51,7 +56,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   onPressed: () => {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(
-                            " Verification code sent to email${_email_controller.value.text}")))
+                            " Verification code sent to ${_email_controller.value.text}")))
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
@@ -96,15 +101,17 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 width: 260,
                 child: FilledButton(
                   onPressed: () => {
+                    FirebaseAuth.instance.sendPasswordResetEmail(
+                        email: FirebaseAuth.instance.currentUser!.email!),
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResetPassword()))
+                      context,
+                      MaterialPageRoute(builder: (context) => SignIn()),
+                    ),
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      "Confirm Email",
+                      "Reset Password",
                       style: TextStyle(fontSize: 18),
                       textAlign: TextAlign.left,
                     ),
