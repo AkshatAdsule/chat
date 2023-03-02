@@ -1,5 +1,4 @@
 import 'package:chat/models/message.dart';
-import 'package:chat/models/user.dart';
 
 class Chat {
   late String name;
