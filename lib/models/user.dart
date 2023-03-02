@@ -1,10 +1,13 @@
 class User {
-  final String firstName;
-  final String lastName;
-  final String profilePhoto;
+  String? uuid;
+  String? firstName;
+  String? lastName;
+  String? profilePhoto;
 
-  const User(
-      {required this.firstName,
-      required this.lastName,
-      required this.profilePhoto});
+  User({
+    this.firstName,
+    this.lastName,
+    this.profilePhoto,
+    this.uuid,
+  });
 }
