@@ -1,6 +1,9 @@
+import 'package:chat/screens/chat/chat_home.dart';
+import 'package:chat/screens/sign_in.dart';
+import 'package:chat/screens/sign_up.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -10,58 +13,122 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
+  void _checkUserLoggedIn(BuildContext context) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ChatHomeScreen(),
+          ),
+          (route) => false,
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _checkUserLoggedIn(context);
     return Scaffold(
-      appBar: AppBar(title: const Text("Welcome")),
+      appBar: AppBar(
+        title: const Text(
+          "Bantr",
+        ),
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            const Text(
-              "We are thrilled to have you trying our app. This app is design for you to chat with your friends",
-              style: TextStyle(fontSize: 22),
-            ),
-            const SizedBox(height: 100),
-            const Text(
-              "Already had an account?",
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(
-              width: 250,
-              child: FilledButton(
-                onPressed: () => {},
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "Login",
-                    style: TextStyle(fontSize: 20),
+            Row(
+              children: [
+                const SizedBox(
+                  height: 80,
+                ),
+                DefaultTextStyle(
+                  style: const TextStyle(
+                    fontSize: 50,
+                  ),
+                  child: AnimatedTextKit(
+                    repeatForever: true,
+                    animatedTexts: [
+                      FadeAnimatedText("Hello!"),
+                      FadeAnimatedText("Hola!"),
+                      FadeAnimatedText("Hallo!"),
+                      FadeAnimatedText("안녕하세요!"),
+                      FadeAnimatedText("你好!")
+                    ],
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Divider(
-              thickness: 3,
-            ),
-            const SizedBox(height: 18),
-            const Text(
-              "Create new account",
-              style: TextStyle(fontSize: 20),
+              ],
             ),
             SizedBox(
-              width: 250,
-              child: FilledButton(
-                onPressed: () => {},
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "Sign Up",
-                    style: TextStyle(fontSize: 20),
+              height: 20,
+            ),
+            const Text(
+              "Get started to find and talk to new people...",
+              style: TextStyle(fontSize: 16),
+            ),
+            Expanded(
+              child: Container(),
+            ),
+            Column(
+              children: [
+                FilledButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SignUp(),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: Text(
+                          "Sign Up",
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                    ],
                   ),
                 ),
-              ),
+                const Divider(),
+                FilledButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SignIn(),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: Text(
+                          "Login",
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),

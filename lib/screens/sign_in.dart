@@ -20,23 +20,9 @@ class _SignInState extends State<SignIn> {
   bool _secure = true;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  // so you can access this outside of widget
-  void _checkUserLoggedIn(BuildContext context) {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatHomeScreen(),
-          ),
-        );
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    _checkUserLoggedIn(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

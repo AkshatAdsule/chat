@@ -1,11 +1,13 @@
-import 'package:chat/models/Chat.dart';
+import 'package:chat/models/chat.dart';
 import 'package:chat/models/message.dart';
 import 'package:chat/models/user.dart';
 import 'package:chat/services/user_service.dart';
 import 'package:chat/widgets/chat/image_message.dart';
 import 'package:chat/widgets/chat/text_message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ChatViewPage extends StatefulWidget {
   final int id;
@@ -66,6 +68,17 @@ class _ChatViewPageState extends State<ChatViewPage> {
     _scrollController.jumpTo(_scrollController.position.minScrollExtent);
   }
 
+  void _sendImageMessage() async {
+    XFile? image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+      maxWidth: 1080,
+    );
+    if (image != null) {
+      FirebaseStorage.instance.ref("/chat_media/");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,13 +120,14 @@ class _ChatViewPageState extends State<ChatViewPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             children: [
               Expanded(
                 // flex: 14,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 8, right: 8),
+                  padding: const EdgeInsets.only(
+                      top: 0, left: 8, right: 8, bottom: 8),
                   child: ListView.separated(
                     controller: _scrollController,
                     shrinkWrap: true,
