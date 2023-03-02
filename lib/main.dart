@@ -6,6 +6,7 @@ import 'package:chat/services/user_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'dart:io' show Platform;
 
 import 'firebase_options.dart';
 
@@ -31,13 +32,25 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return DynamicColorBuilder(
-      builder: (ColorScheme? light, ColorScheme? dark) => MaterialApp(
+      builder: (
+        ColorScheme? light,
+        ColorScheme? dark,
+      ) =>
+          MaterialApp(
         theme: ThemeData(
-          colorScheme: light,
+          colorScheme: Platform.isIOS
+              ? ColorScheme.fromSeed(
+                  seedColor: Color.fromARGB(255, 57, 159, 243),
+                  brightness: Brightness.light)
+              : light,
           useMaterial3: true,
         ),
         darkTheme: ThemeData(
-          colorScheme: dark,
+          colorScheme: Platform.isIOS
+              ? ColorScheme.fromSeed(
+                  seedColor: Color.fromARGB(255, 57, 159, 243),
+                  brightness: Brightness.dark)
+              : dark,
           useMaterial3: true,
         ),
         home: const Onboarding(),
