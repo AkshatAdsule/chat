@@ -1,3 +1,4 @@
+import 'package:chat/screens/reset_password.dart';
 import 'package:flutter/material.dart';
 
 class PrivacySettings extends StatefulWidget {
@@ -20,14 +21,12 @@ class _PrivacySettings extends State<PrivacySettings> {
                 Divider(),
                 ListTile(
                   title: Text("Set Password"),
-                  trailing: Switch(
-                    value: password,
-                    onChanged: (value) {
-                      setState() {
-                        password = value;
-                      }
-                    },
-                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResetPassword()));
+                  },
                 )
               ],
             )));

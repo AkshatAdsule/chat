@@ -1,5 +1,7 @@
 import 'package:chat/screens/chat_view.dart';
 import 'package:chat/screens/create_chat.dart';
+import 'package:chat/screens/settings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +21,14 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Chat"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SettingsPage()));
+              },
+              icon: Icon(Icons.settings))
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => {
