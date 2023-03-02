@@ -59,7 +59,7 @@ class UserService {
     _userDB.doc(newUserInfo.uuid).update({
       "first_name": newUserInfo.firstName,
       "last_name": newUserInfo.lastName,
-      "profile_photo": newUserInfo.profilePhoto,
+      "photo_url": newUserInfo.profilePhoto,
     });
   }
 

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ucdavisgdsc.paradise.chat">
    <application
-        android:label="chat"
+        android:label="Bantr"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

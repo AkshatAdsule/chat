@@ -1,38 +1,64 @@
 import 'dart:typed_data';
 
+import 'package:chat/models/user.dart';
 import 'package:chat/screens/chat/chat_home.dart';
-import 'package:chat/screens/chat/chat_view.dart';
 import 'package:chat/services/user_service.dart';
 import 'package:chat/widgets/common/circle_image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileSettingsPage extends StatefulWidget {
-  const ProfileSettingsPage({super.key});
+  final User userData;
+  const ProfileSettingsPage({
+    super.key,
+    required this.userData,
+  });
 
   @override
   State<ProfileSettingsPage> createState() => _ProfileSettingsPageState();
 }
 
 class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
-  //var db = FirebaseFirestore.instance;
-  TextEditingController _username_controller = TextEditingController();
-  TextEditingController _firstname_controller = TextEditingController();
-  TextEditingController _lastname_controller = TextEditingController();
+  // final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _firstnameController = TextEditingController();
+  final TextEditingController _lastnameController = TextEditingController();
   var db = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    setState(() {
+      _firstnameController.text = widget.userData.firstName!;
+      _lastnameController.text = widget.userData.lastName!;
+    });
+    super.initState();
+  }
+
+  void _updateImage(Uint8List newImage) async {
+    Reference imageRefrence = FirebaseStorage.instance.ref(
+      "/profile_photos/${widget.userData.uuid}",
+    );
+    await imageRefrence.putData(newImage);
+    UserService.getInstance().updateUser(
+      User(
+        profilePhoto: await imageRefrence.getDownloadURL(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: Text("Profile Settings")),
+      appBar: AppBar(
+        title: const Text("Profile Settings"),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 30),
         child: Column(
           children: [
             CircleImagePicker(
-              onSelect: (Uint8List image) {},
+              onSelect: _updateImage,
               radius: 70,
               initialImage: NetworkImage(
                 UserService.getInstance().getCurrentUser()!.profilePhoto!,
@@ -46,24 +72,24 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
               flex: 3,
               child: Column(children: [
                 const SizedBox(height: 40),
+                // TextField(
+                //   controller: _usernameController,
+                //   decoration: InputDecoration(
+                //     labelText: "User name",
+                //     labelStyle: TextStyle(
+                //       fontSize: 22,
+                //     ),
+                //     border: OutlineInputBorder(
+                //       borderSide: BorderSide(
+                //         color: Theme.of(context).colorScheme.secondary,
+                //       ),
+                //     ),
+                //   ),
+                //   keyboardType: TextInputType.emailAddress,
+                // ),
+                // Divider(),
                 TextField(
-                  controller: _username_controller,
-                  decoration: InputDecoration(
-                    labelText: "User name",
-                    labelStyle: TextStyle(
-                      fontSize: 22,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                    ),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                Divider(),
-                TextField(
-                  controller: _firstname_controller,
+                  controller: _firstnameController,
                   decoration: InputDecoration(
                     labelText: "First name",
                     labelStyle: TextStyle(
@@ -79,7 +105,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 ),
                 Divider(),
                 TextField(
-                  controller: _lastname_controller,
+                  controller: _lastnameController,
                   decoration: InputDecoration(
                     labelText: "Last name",
                     labelStyle: TextStyle(
@@ -99,9 +125,9 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
               onPressed: () {
                 //cloud firestore
                 final profile = <String, String>{
-                  "user_name": _username_controller.text,
-                  "last_name": _lastname_controller.text,
-                  "first_name": _firstname_controller.text,
+                  // "user_name": _usernameController.text,
+                  "last_name": _lastnameController.text,
+                  "first_name": _firstnameController.text,
                 };
 
                 db.collection("users").doc("1").set(profile);

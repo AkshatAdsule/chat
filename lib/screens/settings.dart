@@ -1,16 +1,14 @@
 import 'dart:ffi';
 
+import 'package:chat/models/user.dart';
 import 'package:chat/screens/chat/chat_settings.dart';
-import 'package:chat/screens/chat/chat_view.dart';
 import 'package:chat/screens/notification_setting.dart';
 import 'package:chat/screens/privacy_settings.dart';
 import 'package:chat/screens/profile_settings.dart';
 import 'package:chat/screens/sign_in.dart';
 import 'package:chat/services/user_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -21,6 +19,21 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   bool enable = false;
+
+  User currentUser = UserService.getInstance().getCurrentUser()!;
+
+  @override
+  void initState() {
+    super.initState();
+    UserService.userStream.listen((event) {
+      setState(() {
+        if (event != null) {
+          currentUser = event;
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,24 +46,26 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CircleAvatar(
-                  radius: 40,
+                  radius: 60,
                   backgroundImage: NetworkImage(
-                    UserService.getInstance().getCurrentUser()!.profilePhoto!,
+                    currentUser.profilePhoto!,
                   ),
                 ),
                 Column(
                   children: [
                     Text(
-                      "user_name",
-                      style: TextStyle(fontSize: 20),
+                      "${currentUser.firstName!} ${currentUser.lastName}",
+                      style: const TextStyle(fontSize: 20),
                     ),
-                    TextButton(
-                      child: Text("Profile settings"),
+                    FilledButton.tonal(
+                      child: const Text("Profile settings"),
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ProfileSettingsPage(),
+                            builder: (context) => ProfileSettingsPage(
+                              userData: currentUser,
+                            ),
                           ),
                         );
                       },
@@ -101,7 +116,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ListTile(
                   title: Text("Sign Out"),
                   onTap: () async {
-                    await FirebaseAuth.instance.signOut();
+                    await auth.FirebaseAuth.instance.signOut();
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

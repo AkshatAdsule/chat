@@ -68,7 +68,7 @@ class _OnboardingState extends State<Onboarding> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               const Text(
