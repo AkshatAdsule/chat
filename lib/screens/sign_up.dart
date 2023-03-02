@@ -1,4 +1,4 @@
-import 'package:chat/screens/chat_home.dart';
+import 'package:chat/screens/chat/chat_home.dart';
 import 'package:chat/screens/user_agreement.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';

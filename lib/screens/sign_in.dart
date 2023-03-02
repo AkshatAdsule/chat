@@ -1,4 +1,4 @@
-import 'package:chat/screens/chat_home.dart';
+import 'package:chat/screens/chat/chat_home.dart';
 import 'package:chat/screens/forgot_password.dart';
 import 'package:chat/screens/onboarding.dart';
 import 'package:chat/screens/sign_up.dart';

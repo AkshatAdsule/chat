@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
-import 'package:chat/screens/chat_settings.dart';
-import 'package:chat/screens/chat_view.dart';
+import 'package:chat/screens/chat/chat_settings.dart';
+import 'package:chat/screens/chat/chat_view.dart';
 import 'package:chat/screens/notification_setting.dart';
 import 'package:chat/screens/privacy_settings.dart';
 import 'package:chat/screens/profile_settings.dart';
