@@ -15,7 +15,7 @@ class ChatViewPage extends StatefulWidget {
 }
 
 class _ChatViewPageState extends State<ChatViewPage> {
-  final List<Message> messages = const [
+  final List<Message> messages = [
     Message(
       messageType: MessageType.text,
       contents:

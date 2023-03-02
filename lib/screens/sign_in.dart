@@ -1,3 +1,4 @@
+import 'package:chat/screens/chat_home.dart';
 import 'package:chat/screens/forgot_password.dart';
 import 'package:chat/screens/onboarding.dart';
 import 'package:chat/screens/sign_up.dart';
@@ -20,9 +21,22 @@ class _SignInState extends State<SignIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   // so you can access this outside of widget
+  void _checkUserLoggedIn(BuildContext context) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatHomeScreen(),
+          ),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    _checkUserLoggedIn(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -77,7 +91,7 @@ class _SignInState extends State<SignIn> {
                 Expanded(
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ForgetPassword(),
@@ -96,10 +110,10 @@ class _SignInState extends State<SignIn> {
                 Expanded(
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SignUp(),
+                            builder: (context) => const SignUp(),
                           ));
                     },
                     child: const Text(
@@ -116,12 +130,26 @@ class _SignInState extends State<SignIn> {
                 onPressed: () async {
                   try {
                     await FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: _emailController.text,
-                        password: _passwordController.text);
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    );
                   } on FirebaseAuthException catch (e) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text(e.toString())));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          e.toString(),
+                        ),
+                      ),
+                    );
+                    return;
                   }
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ChatHomeScreen(),
+                    ),
+                  );
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),

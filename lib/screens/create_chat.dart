@@ -11,6 +11,8 @@ class CreateChatScreen extends StatefulWidget {
 }
 
 class _CreateChatScreenState extends State<CreateChatScreen> {
+  bool _isPrivate = false;
+  Uint8List _groupIcon = Uint8List(0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +27,8 @@ class _CreateChatScreenState extends State<CreateChatScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CircleImagePicker(
-                  onSelect: (Uint8List imageBytes) {
-                    print(imageBytes.length);
+                  onSelect: (Uint8List image) {
+                    _groupIcon = image;
                   },
                   radius: 50,
                 ),
@@ -51,8 +53,12 @@ class _CreateChatScreenState extends State<CreateChatScreen> {
                   style: TextStyle(fontSize: 11),
                 ),
                 trailing: Switch(
-                  onChanged: (value) {},
-                  value: true,
+                  onChanged: (value) {
+                    setState(() {
+                      _isPrivate = value;
+                    });
+                  },
+                  value: _isPrivate,
                 ))
           ],
         ),

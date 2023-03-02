@@ -22,14 +22,11 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
         title: const Text("Chat"),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SettingsPage()));
-            },
-            icon: const Icon(Icons.settings),
-          ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SettingsPage()));
+              },
+              icon: Icon(Icons.settings))
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(

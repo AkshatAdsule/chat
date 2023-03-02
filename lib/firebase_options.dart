@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1049003729202',
     projectId: 'chat-paradise-gdsc',
     storageBucket: 'chat-paradise-gdsc.appspot.com',
-    iosClientId: '1049003729202-dsc3tq6bl2aeokm946cmks78an42qu77.apps.googleusercontent.com',
+    iosClientId:
+        '1049003729202-dsc3tq6bl2aeokm946cmks78an42qu77.apps.googleusercontent.com',
     iosBundleId: 'com.ucdavisgdsc.paradise.chat',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1049003729202',
     projectId: 'chat-paradise-gdsc',
     storageBucket: 'chat-paradise-gdsc.appspot.com',
-    iosClientId: '1049003729202-dsc3tq6bl2aeokm946cmks78an42qu77.apps.googleusercontent.com',
+    iosClientId:
+        '1049003729202-dsc3tq6bl2aeokm946cmks78an42qu77.apps.googleusercontent.com',
     iosBundleId: 'com.ucdavisgdsc.paradise.chat',
   );
 }

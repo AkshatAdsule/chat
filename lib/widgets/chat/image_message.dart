@@ -18,7 +18,7 @@ class ImageMessage extends StatelessWidget {
               CircleAvatar(
                 radius: 10,
                 backgroundImage: NetworkImage(
-                  message.sender.profilePhoto,
+                  message.sender.profilePhoto!,
                 ),
               ),
               const SizedBox(
