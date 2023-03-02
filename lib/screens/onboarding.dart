@@ -47,9 +47,9 @@ class _OnboardingState extends State<Onboarding> {
                   height: 80,
                 ),
                 DefaultTextStyle(
-                  style: const TextStyle(
-                    fontSize: 50,
-                  ),
+                  style: TextStyle(
+                      fontSize: 50,
+                      color: Theme.of(context).colorScheme.onBackground),
                   child: AnimatedTextKit(
                     repeatForever: true,
                     animatedTexts: [
@@ -57,7 +57,11 @@ class _OnboardingState extends State<Onboarding> {
                       FadeAnimatedText("Hola!"),
                       FadeAnimatedText("Hallo!"),
                       FadeAnimatedText("안녕하세요!"),
-                      FadeAnimatedText("你好!")
+                      FadeAnimatedText("你好!"),
+                      FadeAnimatedText("Привіт"),
+                      FadeAnimatedText("Bonjour"),
+                      FadeAnimatedText("こんにちは"),
+                      FadeAnimatedText("Hallå")
                     ],
                   ),
                 ),
