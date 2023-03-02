@@ -1,12 +1,19 @@
 import 'package:chat/screens/chat_home.dart';
 import 'package:chat/screens/onboarding.dart';
+import 'package:chat/screens/settings.dart';
 import 'package:chat/screens/sign_in.dart';
 import 'package:chat/screens/sign_up.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MainApp());
 }
 
@@ -15,7 +22,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Firebase.initializeApp();
     return DynamicColorBuilder(
       builder: (ColorScheme? light, ColorScheme? dark) => MaterialApp(
         theme: ThemeData(
@@ -26,7 +32,7 @@ class MainApp extends StatelessWidget {
           colorScheme: dark,
           useMaterial3: true,
         ),
-        home: const SignIn(),
+        home: const ChatHomeScreen(),
       ),
     );
   }

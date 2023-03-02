@@ -26,6 +26,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    Firebase.initializeApp();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text("Sign up")),
