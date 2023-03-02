@@ -1,7 +1,10 @@
 import 'package:chat/screens/sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -83,6 +86,8 @@ class _ResetPasswordState extends State<ResetPassword> {
               ),
               FilledButton(
                   onPressed: () {
+                    FirebaseAuth.instance.sendPasswordResetEmail(
+                        email: FirebaseAuth.instance.currentUser!.email!);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => SignIn()),

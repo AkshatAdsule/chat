@@ -19,7 +19,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Forget Password")),
+      appBar: AppBar(title: const Text("Reset Password")),
       body: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Center(

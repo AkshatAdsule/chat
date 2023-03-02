@@ -37,7 +37,7 @@ class _MainAppState extends State<MainApp> {
           colorScheme: dark,
           useMaterial3: true,
         ),
-        home: const SignIn(),
+        home: const Onboarding(),
       ),
     );
   }
