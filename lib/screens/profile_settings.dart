@@ -5,7 +5,7 @@ import 'package:chat/screens/chat/chat_view.dart';
 import 'package:chat/widgets/common/circle_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileSettingsPage extends StatefulWidget {
   const ProfileSettingsPage({super.key});
@@ -17,6 +17,10 @@ class ProfileSettingsPage extends StatefulWidget {
 class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   //var db = FirebaseFirestore.instance;
   TextEditingController _username_controller = TextEditingController();
+  TextEditingController _firstname_controller = TextEditingController();
+  TextEditingController _lastname_controller = TextEditingController();
+  var db = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +59,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 ),
                 Divider(),
                 TextField(
-                  controller: _username_controller,
+                  controller: _firstname_controller,
                   decoration: InputDecoration(
                     labelText: "First name",
                     labelStyle: TextStyle(
@@ -71,7 +75,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 ),
                 Divider(),
                 TextField(
-                  controller: _username_controller,
+                  controller: _lastname_controller,
                   decoration: InputDecoration(
                     labelText: "Last name",
                     labelStyle: TextStyle(
@@ -90,9 +94,13 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
             FilledButton(
               onPressed: () {
                 //cloud firestore
+                final profile = <String, String>{
+                  "user_name": _username_controller.text,
+                  "last_name": _lastname_controller.text,
+                  "first_name": _firstname_controller.text,
+                };
 
-                // var uid = 1;
-                // db.collection("users").doc(uid).set(username));
+                db.collection("users").doc("1").set(profile);
 
                 Navigator.push(
                     context,

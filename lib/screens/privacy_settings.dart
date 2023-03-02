@@ -1,5 +1,4 @@
 import 'package:chat/screens/forgot_password.dart';
-import 'package:chat/screens/reset_password.dart';
 import 'package:flutter/material.dart';
 
 class PrivacySettings extends StatefulWidget {
