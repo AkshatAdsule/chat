@@ -39,8 +39,10 @@ class _archiveState extends State<archive> {
                   labelStyle: const TextStyle(
                     fontSize: 22,
                   ),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -65,8 +67,10 @@ class _archiveState extends State<archive> {
                   labelStyle: const TextStyle(
                     fontSize: 22,
                   ),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(_secure_confirm
@@ -88,7 +92,7 @@ class _archiveState extends State<archive> {
                   onPressed: () {
                     FirebaseAuth.instance.sendPasswordResetEmail(
                         email: FirebaseAuth.instance.currentUser!.email!);
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => SignIn()),
                     );

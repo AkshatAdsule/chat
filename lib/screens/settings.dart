@@ -102,7 +102,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   title: Text("Sign Out"),
                   onTap: () async {
                     await FirebaseAuth.instance.signOut();
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => SignIn(),

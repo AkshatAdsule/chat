@@ -1,4 +1,4 @@
-import 'package:chat/models/Chat.dart';
+import 'package:chat/models/chat.dart';
 import 'package:chat/screens/chat/chat_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -94,9 +94,9 @@ class _ChatListTileState extends State<ChatListTile> {
                       const SizedBox(
                         height: 2,
                       ),
-                      const Text(
-                        "Steven: Recent Message...",
-                        style: TextStyle(
+                      Text(
+                        "${chat!.messages.last.sender.firstName}: ${chat!.messages.last.contents.replaceRange(15 < chat!.messages.last.contents.length ? 15 : chat!.messages.last.contents.length, chat!.messages.last.contents.length, "...")}",
+                        style: const TextStyle(
                           fontSize: 12,
                         ),
                       )

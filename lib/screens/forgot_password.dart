@@ -25,7 +25,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         child: Center(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               TextField(
@@ -34,19 +34,21 @@ class _ResetPasswordState extends State<ResetPassword> {
                   _email_controller.text =
                       FirebaseAuth.instance.currentUser!.email.toString();
                 },
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Email",
                   hintText: "Enter your email",
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 22,
                   ),
                   border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
                 ),
                 keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               SizedBox(
@@ -67,7 +69,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               TextField(
@@ -78,8 +80,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                   labelStyle: const TextStyle(
                     fontSize: 22,
                   ),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(_secure ? Icons.security : Icons.remove_red_eye),
@@ -93,7 +97,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 obscureText: _secure,
                 keyboardType: TextInputType.number,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               SizedBox(
@@ -104,7 +108,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         email: FirebaseAuth.instance.currentUser!.email!),
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => SignIn()),
+                      MaterialPageRoute(builder: (context) => const SignIn()),
                     ),
                   },
                   child: const Padding(

@@ -38,13 +38,15 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(height: 40),
               TextField(
                 controller: _email_controller,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Email",
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 22,
                   ),
                   border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
                 ),
                 keyboardType: TextInputType.emailAddress,
@@ -57,8 +59,10 @@ class _SignUpState extends State<SignUp> {
                   labelStyle: const TextStyle(
                     fontSize: 22,
                   ),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(_secure ? Icons.security : Icons.remove_red_eye),
@@ -80,8 +84,10 @@ class _SignUpState extends State<SignUp> {
                   labelStyle: const TextStyle(
                     fontSize: 22,
                   ),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueAccent),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(_confirm_secure
@@ -102,9 +108,12 @@ class _SignUpState extends State<SignUp> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => UserAgreement()));
                 },
-                child: const Text(
+                child: Text(
                   "Please read the user agreement before proceed ",
-                  style: TextStyle(fontSize: 16, color: Colors.blueAccent),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
