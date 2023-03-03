@@ -1,4 +1,5 @@
 import 'package:chat/screens/chat/chat_home.dart';
+import 'package:chat/screens/setup.dart';
 import 'package:chat/screens/user_agreement.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -105,8 +106,12 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserAgreement()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const UserAgreement(),
+                    ),
+                  );
                 },
                 child: Text(
                   "Please read the user agreement before proceed ",
@@ -150,8 +155,10 @@ class _SignUpState extends State<SignUp> {
                       return;
                     }
 
+                    late UserCredential credential;
+
                     try {
-                      await FirebaseAuth.instance
+                      credential = await FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
                         email: _email_controller.text,
                         password: _password_controller.text,
@@ -170,7 +177,9 @@ class _SignUpState extends State<SignUp> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ChatHomeScreen(),
+                          builder: (context) => SetupPage(
+                            uid: credential.user!.uid,
+                          ),
                         ));
                   },
                   child: const Padding(

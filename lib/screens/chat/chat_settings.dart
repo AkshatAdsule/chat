@@ -1,72 +1,131 @@
+import 'dart:typed_data';
+
+import 'package:chat/models/chat.dart';
+import 'package:chat/widgets/common/circle_image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class ChatSettings extends StatefulWidget {
-  const ChatSettings({super.key});
+  final Chat? chat;
+  final String? chatId;
+  final String? heroTag;
+  const ChatSettings({super.key, this.chat, this.chatId, this.heroTag});
 
   @override
   State<ChatSettings> createState() => _ChatSettingsState();
 }
 
 class _ChatSettingsState extends State<ChatSettings> {
-  @override
-  bool MasterEnable = true;
-  bool PreviewEnable = true;
-  bool GroupchatEnable = true;
-  bool VibrationEnable = true;
+  bool masterEnable = true;
+  bool previewEnable = true;
+  bool groupchatEnable = true;
+  bool vibrationEnable = true;
 
+  final TextEditingController _nameController = TextEditingController();
+
+  void _updateImage(Uint8List newImage) async {
+    Reference imageRefrence = FirebaseStorage.instance.ref(
+      "/chat_icons/${widget.chatId}",
+    );
+    await imageRefrence.putData(newImage);
+    await FirebaseFirestore.instance.doc("chats/${widget.chatId}").update(
+      {"display_photo": await imageRefrence.getDownloadURL()},
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.chat != null) {
+      setState(() {
+        _nameController.text = widget.chat!.name;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Chats")),
+      appBar: AppBar(title: const Text("Chat Settings")),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Divider(),
+            widget.chat != null
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Hero(
+                        tag: widget.heroTag!,
+                        child: CircleImagePicker(
+                          onSelect: _updateImage,
+                          initialImage: NetworkImage(widget.chat!.photo),
+                          radius: 50,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(),
+                      ),
+                      Expanded(
+                        flex: 8,
+                        child: TextField(
+                          controller: _nameController,
+                          decoration: const InputDecoration(
+                            hintText: "Chat name",
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(),
+            const Divider(),
             ListTile(
-              title: Text("All Notification"),
+              title: const Text("All Notification"),
               trailing: Switch(
-                value: MasterEnable,
+                value: masterEnable,
                 onChanged: (value) {
                   setState(() {
-                    MasterEnable = value;
+                    masterEnable = value;
                   });
                 },
               ),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
-              title: Text("Group-Chat Notification"),
+              title: const Text("Group-Chat Notification"),
               trailing: Switch(
-                value: GroupchatEnable,
+                value: groupchatEnable,
                 onChanged: (value) {
                   setState(() {
-                    GroupchatEnable = value;
+                    groupchatEnable = value;
                   });
                 },
               ),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
-              title: Text("Show Previews"),
+              title: const Text("Show Previews"),
               trailing: Switch(
-                value: PreviewEnable,
+                value: previewEnable,
                 onChanged: (value) {
                   setState(() {
-                    PreviewEnable = value;
+                    previewEnable = value;
                   });
                 },
               ),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
-              title: Text("Delete All Chat"),
+              title: const Text("Delete All Chat"),
               onTap: () {
                 showAlertDialog(context);
               },
             ),
-            Divider(),
+            const Divider(),
           ],
         ),
       ),

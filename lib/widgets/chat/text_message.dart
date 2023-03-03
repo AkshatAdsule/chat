@@ -16,7 +16,7 @@ class TextMessage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               CircleAvatar(
-                radius: 10,
+                radius: 15,
                 backgroundImage: NetworkImage(
                   message.sender.profilePhoto ?? "",
                 ),
@@ -28,6 +28,7 @@ class TextMessage extends StatelessWidget {
                 child: Text(
                   message.contents,
                   softWrap: true,
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
             ],
@@ -37,7 +38,7 @@ class TextMessage extends StatelessWidget {
           ),
           Text(
             "${message.sender.firstName} ${message.sender.lastName}",
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w300),
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
           ),
         ],
       ),

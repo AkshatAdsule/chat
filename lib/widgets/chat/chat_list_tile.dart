@@ -46,7 +46,11 @@ class _ChatListTileState extends State<ChatListTile> {
                     chatId: widget.id,
                   ),
                 ),
-              )
+              ).then(
+                (value) {
+                  _loadData();
+                },
+              ),
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),

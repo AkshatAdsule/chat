@@ -1,6 +1,7 @@
 import 'package:chat/firebase_options.dart';
 import 'package:chat/screens/chat/chat_home.dart';
 import 'package:chat/screens/onboarding.dart';
+import 'package:chat/screens/setup.dart';
 import 'package:chat/screens/sign_in.dart';
 import 'package:chat/services/user_service.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -41,7 +42,7 @@ class _MainAppState extends State<MainApp> {
         theme: ThemeData(
           colorScheme: Platform.isIOS
               ? ColorScheme.fromSeed(
-                  seedColor: Color.fromARGB(255, 57, 159, 243),
+                  seedColor: const Color.fromARGB(255, 57, 159, 243),
                   brightness: Brightness.light)
               : light,
           useMaterial3: true,
@@ -49,7 +50,7 @@ class _MainAppState extends State<MainApp> {
         darkTheme: ThemeData(
           colorScheme: Platform.isIOS
               ? ColorScheme.fromSeed(
-                  seedColor: Color.fromARGB(255, 57, 159, 243),
+                  seedColor: const Color.fromARGB(255, 57, 159, 243),
                   brightness: Brightness.dark)
               : dark,
           useMaterial3: true,

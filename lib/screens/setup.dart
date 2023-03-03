@@ -1,48 +1,29 @@
-import 'dart:typed_data';
-
 import 'package:chat/models/user.dart';
-import 'package:chat/screens/chat/chat_home.dart';
 import 'package:chat/services/user_service.dart';
 import 'package:chat/widgets/common/circle_image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 
-class ProfileSettingsPage extends StatefulWidget {
-  final User userData;
-  const ProfileSettingsPage({
-    super.key,
-    required this.userData,
-  });
+import 'package:chat/screens/chat/chat_home.dart';
+
+class SetupPage extends StatefulWidget {
+  final String uid;
+  const SetupPage({super.key, required this.uid});
 
   @override
-  State<ProfileSettingsPage> createState() => _ProfileSettingsPageState();
+  State<SetupPage> createState() => _SetupPageState();
 }
 
-class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
-  // final TextEditingController _usernameController = TextEditingController();
+class _SetupPageState extends State<SetupPage> {
   final TextEditingController _firstnameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
 
-  @override
-  void initState() {
-    setState(() {
-      _firstnameController.text = widget.userData.firstName!;
-      _lastnameController.text = widget.userData.lastName!;
-    });
-    super.initState();
-  }
+  Uint8List imageData = Uint8List(0);
 
   void _updateImage(Uint8List newImage) async {
-    Reference imageRefrence = FirebaseStorage.instance.ref(
-      "/profile_photos/${widget.userData.uuid}",
-    );
-    await imageRefrence.putData(newImage);
-    UserService.getInstance().updateUser(
-      User(
-        profilePhoto: await imageRefrence.getDownloadURL(),
-      ),
-    );
+    imageData = newImage;
   }
 
   @override
@@ -50,7 +31,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("Profile Settings"),
+        title: const Text("Setup your account"),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 30),
@@ -59,34 +40,11 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
             CircleImagePicker(
               onSelect: _updateImage,
               radius: 70,
-              initialImage: NetworkImage(
-                UserService.getInstance().getCurrentUser()!.profilePhoto!,
-              ),
             ),
-            // Expanded(
-            //   flex: 1,
-            //   child: Container(),
-            // ),
             Expanded(
               flex: 3,
               child: Column(children: [
                 const SizedBox(height: 40),
-                // TextField(
-                //   controller: _usernameController,
-                //   decoration: InputDecoration(
-                //     labelText: "User name",
-                //     labelStyle: TextStyle(
-                //       fontSize: 22,
-                //     ),
-                //     border: OutlineInputBorder(
-                //       borderSide: BorderSide(
-                //         color: Theme.of(context).colorScheme.secondary,
-                //       ),
-                //     ),
-                //   ),
-                //   keyboardType: TextInputType.emailAddress,
-                // ),
-                // Divider(),
                 TextField(
                   controller: _firstnameController,
                   decoration: InputDecoration(
@@ -121,7 +79,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
               ]),
             ),
             FilledButton(
-              onPressed: () {
+              onPressed: () async {
                 //cloud firestore
                 final profile = <String, String>{
                   // "user_name": _usernameController.text,
@@ -129,30 +87,39 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   "first_name": _firstnameController.text,
                 };
 
+                String imageUrl =
+                    "https://firebasestorage.googleapis.com/v0/b/chat-paradise-gdsc.appspot.com/o/profile_photos%2Fdefault.jpeg?alt=media&token=79142ebf-04d9-4de9-8f51-d2803637f68a";
+
+                if (imageData.isNotEmpty) {
+                  Reference imageRefrence = FirebaseStorage.instance.ref(
+                    "/profile_photos/${widget.uid}",
+                  );
+                  await imageRefrence.putData(imageData);
+                  imageUrl = await imageRefrence.getDownloadURL();
+                }
+
+                await FirebaseFirestore.instance
+                    .doc("/users/${widget.uid}")
+                    .set(
+                  {
+                    "first_name": _firstnameController.text,
+                    "last_name": _lastnameController.text,
+                    "photo_url": imageUrl,
+                    "chats": [],
+                  },
+                );
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ChatHomeScreen()));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChatHomeScreen(),
+                  ),
+                );
               },
               child: Row(children: [
                 Expanded(child: Container()),
                 Text("Done"),
                 Expanded(child: Container())
               ]),
-              // style: ButtonStyle(
-              //   padding:
-              //       MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10)),
-              //   foregroundColor: MaterialStateProperty.all<Color>(
-              //       Theme.of(context).colorScheme.secondary),
-              //   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              //     RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(10.0),
-              //       side: BorderSide(
-              //         color: Theme.of(context).colorScheme.secondary,
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ),
           ],
         ),

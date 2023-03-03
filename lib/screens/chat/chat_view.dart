@@ -143,7 +143,11 @@ class _ChatViewPageState extends State<ChatViewPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ChatSettings(),
+                  builder: (context) => ChatSettings(
+                    chat: _chat,
+                    chatId: widget.chatId,
+                    heroTag: "__chat_icon${widget.id}",
+                  ),
                 ),
               );
             },
