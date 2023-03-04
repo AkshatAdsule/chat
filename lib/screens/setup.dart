@@ -49,7 +49,7 @@ class _SetupPageState extends State<SetupPage> {
                   controller: _firstnameController,
                   decoration: InputDecoration(
                     labelText: "First name",
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 22,
                     ),
                     border: OutlineInputBorder(
@@ -60,12 +60,12 @@ class _SetupPageState extends State<SetupPage> {
                   ),
                   keyboardType: TextInputType.emailAddress,
                 ),
-                Divider(),
+                const Divider(),
                 TextField(
                   controller: _lastnameController,
                   decoration: InputDecoration(
                     labelText: "Last name",
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 22,
                     ),
                     border: OutlineInputBorder(
@@ -108,16 +108,18 @@ class _SetupPageState extends State<SetupPage> {
                     "chats": [],
                   },
                 );
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ChatHomeScreen(),
-                  ),
-                );
+                if (context.mounted) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ChatHomeScreen(),
+                    ),
+                  );
+                }
               },
               child: Row(children: [
                 Expanded(child: Container()),
-                Text("Done"),
+                const Text("Done"),
                 Expanded(child: Container())
               ]),
             ),

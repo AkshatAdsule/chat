@@ -35,6 +35,7 @@ class _ChatViewPageState extends State<ChatViewPage> {
   void initState() {
     super.initState();
     _chat = widget.intialChat;
+    UserService.getInstance().manualUpdateUser();
     setState(() {
       _chat.messages.sort(
         (b, a) => a.timestamp.compareTo(b.timestamp),

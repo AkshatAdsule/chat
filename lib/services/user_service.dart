@@ -31,14 +31,23 @@ class UserService {
       User.fromReference(_currentFirebaseUser!.uid).then((value) {
         _currentUser = value;
         _userStreamController.add(_currentUser);
+      }).then((User? value) {
+        _currentUser = value;
+        _userStreamController.add(_currentUser);
       });
     }
+  }
+
+  Future<void> manualUpdateUser() async {
+    _currentFirebaseUser = auth.FirebaseAuth.instance.currentUser;
+    _currentUser = await User.fromReference(_currentFirebaseUser!.uid);
   }
 
   void _authListener(auth.User? user) async {
     if (user != null) {
       _currentFirebaseUser = user;
       _currentUser = await User.fromReference(user.uid);
+      _userStreamController.add(_currentUser);
       _userDB.doc(_currentUser!.uuid).snapshots().listen((event) async {
         _currentUser = await User.fromReference(_currentFirebaseUser!.uid);
         _userStreamController.add(_currentUser!);
@@ -46,7 +55,7 @@ class UserService {
     }
   }
 
-  void updateUser(User newUserInfo) async {
+  Future<void> updateUser(User newUserInfo) async {
     newUserInfo = User(
       firstName: newUserInfo.firstName ?? _currentUser!.firstName,
       lastName: newUserInfo.lastName ?? _currentUser!.lastName,

@@ -7,6 +7,7 @@ import 'package:chat/services/user_service.dart';
 import 'package:chat/widgets/chat/chat_list_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
+import 'package:chat/screens/chat/chat_search.dart';
 
 class ChatHomeScreen extends StatefulWidget {
   const ChatHomeScreen({super.key});
@@ -107,20 +108,32 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
           ),
         ],
       ),
-      body: chats == null
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: ListView.builder(
-                itemCount: chats!.length,
-                itemBuilder: (context, i) => ChatListTile(
-                  index: i,
-                  id: chats![i],
-                ),
-              ),
-            ),
+      body: _page == 0 || _page == 1
+          ? chats == null
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : chats!.isEmpty
+                  ? const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(32.0),
+                        child: Text(
+                          "Create or join a chat to get started!",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ListView.builder(
+                        itemCount: chats!.length,
+                        itemBuilder: (context, i) => ChatListTile(
+                          index: i,
+                          id: chats![i],
+                        ),
+                      ),
+                    )
+          : SearchPage(),
     );
   }
 }

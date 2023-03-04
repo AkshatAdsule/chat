@@ -5,6 +5,8 @@ class Chat {
   late String photo;
   late List<Message> messages;
 
+  Chat({required this.name, required this.photo, required this.messages});
+
   Chat.fromMap(Map<String, dynamic> data) {
     name = data["name"]!;
     photo = data["display_photo"]!;
